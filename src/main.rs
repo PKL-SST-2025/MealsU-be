@@ -28,7 +28,7 @@ async fn main() {
     // Init database pool
     let pool = db::create_pool(&cfg.database_url)
         .await
-        .expect("failed to connect to database");
+        .expect("failed to connect to database!");
 
     let state = AppState {
         pool,
@@ -46,17 +46,17 @@ async fn main() {
 
     let listener = tokio::net::TcpListener::bind(addr)
         .await
-        .expect("failed to bind address");
+        .expect("failed to bind address!");
 
     axum::serve(listener, app)
         .await
-        .expect("server error");
+        .expect("server error!");
 }
 
 fn init_tracing() {
     let filter = EnvFilter::try_from_default_env()
         .or_else(|_| EnvFilter::try_new("info,tower_http=info,axum=info"))
-        .expect("invalid RUST_LOG value");
+        .expect("invalid RUST_LOG value!");
 
     tracing_subscriber::registry()
         .with(filter)
